@@ -1,5 +1,5 @@
 import './assets/scss/styles.scss';
-import { ICard, ICardType } from './types';
+import { ICard, ICardType, IDrawingOptions } from './types';
 import Card from './components/card';
 import cardType from './components/cardType';
 import bus from './components/bus';
@@ -23,16 +23,20 @@ export class ChatBotFlowsMaker {
   directionType = 0;
   currentZoom = 100;
 
-  constructor(container: any, btnNext:HTMLButtonElement
-    , btnAdd: HTMLButtonElement
-    , btnEdit: HTMLButtonElement
-    , btnDelete: HTMLButtonElement
-    , iconStart: HTMLElement
-    , iconMessage: HTMLElement
-    , iconQuestion: HTMLElement
-    , iconGoal: HTMLElement
-    ,isReport:boolean
-    ,isReadOnly:boolean=false) {
+  constructor(
+    container: any,
+    btnNext: HTMLButtonElement,
+    btnAdd: HTMLButtonElement,
+    btnEdit: HTMLButtonElement,
+    btnDelete: HTMLButtonElement,
+    iconStart: HTMLElement,
+    iconMessage: HTMLElement,
+    iconQuestion: HTMLElement,
+    iconGoal: HTMLElement,
+    isReport: boolean,
+    isReadOnly: boolean = false,
+    drawingOptions?: IDrawingOptions,
+  ) {
     logger.debug('Init...');
     this.container = container || document.body;
     this.isReadOnly = isReadOnly
@@ -48,6 +52,9 @@ export class ChatBotFlowsMaker {
 
     mouseDrawer.setContainer(container);
     cardObjects.setContainer(container);
+    drawingOptions && mouseDrawer.setDrawingOptions(drawingOptions);
+    drawingOptions && cardObjects.setDrawingOptions(drawingOptions);
+
     return this;
   }
 
