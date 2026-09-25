@@ -1,4 +1,4 @@
-import { IDrawClickedNodeFrom, INextCard } from '../types';
+import { IDrawClickedNodeFrom, IDrawingOptions, IDrawingPath, INextCard } from '../types';
 import LeaderLine from '../plugins/leader-line.min';
 import { uniqBy } from '../utils/helper';
 import logger from '../utils/logger';
@@ -14,6 +14,9 @@ class MouseDrawer {
   isReport:boolean = false
   boundingClientRectBeforeZoom:any
   directionType = 1
+
+  drawingPath: IDrawingPath = 'fluid';
+  drawingColor: string = 'coral';
 
   get endMovingNodeId() {
     return 'sgbmk-end-moving-node';
@@ -95,7 +98,10 @@ class MouseDrawer {
       return;
     }
 
-    this.movingLine = new LeaderLine(fromEl, toEl);
+    this.movingLine = new LeaderLine(fromEl, toEl, {
+      path: this.drawingPath,
+      color: this.drawingColor,
+    });
   };
 
   addMovingNode = () => {
@@ -292,6 +298,11 @@ class MouseDrawer {
     if (this.drawDoneCallback) {
       this.drawDoneCallback();
     }
+  }
+
+  setDrawingOptions(options: IDrawingOptions) {
+    this.drawingPath = options?.path || 'fluid';
+    this.drawingColor = options?.color || 'coral';
   }
 }
 

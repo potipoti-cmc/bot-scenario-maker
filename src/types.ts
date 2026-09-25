@@ -43,3 +43,10 @@ export interface IDrawClickedNodeTo {
 }
 
 export type ILine = Record<string, any>;
+
+export type IDrawingPath = 'fluid' | 'straight' | 'arc' | 'magnet' | 'grid';
+
+export interface IDrawingOptions {
+  path?: IDrawingPath;
+  color?: string;
+}

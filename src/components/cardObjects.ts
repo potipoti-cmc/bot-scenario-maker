@@ -2,13 +2,16 @@ import logger from '../utils/logger';
 import Card from './card';
 import PlainDraggable from '../plugins/plain-draggable.min';
 import LeaderLine from '../plugins/leader-line.min';
-import { ICardAnswer, ICard, ILine, INextCard } from '../types';
+import { ICardAnswer, ICard, ILine, INextCard, IDrawingPath, IDrawingOptions } from '../types';
 import bus from './bus';
 
 class CardObjects {
   container: any;
   items: Card[] = [];
   lines: ILine = {};
+
+  drawingPath: IDrawingPath = 'fluid';
+  drawingColor: string = 'coral';
 
   setContainer(container: any) {
     this.container = container;
@@ -94,6 +97,8 @@ class CardObjects {
           const line = new LeaderLine(fromEl, toEl, {
             lineId,
             middleLabel: (LeaderLine as any).captionLabel(answer.title),
+            path: this.drawingPath,
+            color: this.drawingColor,
           });
 
           this.addLine(lineId, line);
@@ -246,6 +251,11 @@ class CardObjects {
         el.classList.add(css ?? '');
       }
     });
+  }
+
+  setDrawingOptions(options: IDrawingOptions) {
+    this.drawingPath = options?.path || 'fluid';
+    this.drawingColor = options?.color || 'coral';
   }
 }
 
